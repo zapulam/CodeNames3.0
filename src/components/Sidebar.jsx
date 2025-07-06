@@ -74,14 +74,16 @@ const SideNav = ({ onResetChat, onToggleCodemaster, codemasterMode }) => {
           <li key={index}>
             <button
               onClick={onClick}
-              className={`group transition-colors duration-200 w-full p-3 rounded-lg hover:bg-slate-800 h-12 cursor-pointer ${
-                isCollapsed ? 'flex justify-center items-center' : 'flex items-center'
+              className={`group transition-colors duration-200 rounded-lg hover:bg-slate-800 h-12 cursor-pointer ${
+                isCollapsed ? 'w-full flex justify-center items-center p-2' : 'w-full flex items-center p-3'
               }`}
             >
-              <div className="text-slate-400 group-hover:text-blue-400 flex-shrink-0">
+              <div className={`text-slate-400 group-hover:text-blue-400 flex-shrink-0 ${
+                isCollapsed ? 'flex justify-center items-center' : ''
+              }`}>
                 {icon}
               </div>
-              <div className="flex-1 min-w-0 overflow-hidden">
+              <div className={`${isCollapsed ? 'hidden' : 'flex-1 min-w-0 overflow-hidden'}`}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={isCollapsed ? 'collapsed' : 'expanded'}
