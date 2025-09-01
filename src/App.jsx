@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import SideNav from "./components/Sidebar";
 import { GameGrid } from "./components/Gamegrid";
+import {
+  PlusCircle,
+  Eye,
+  EyeOff,
+  MessageCircleQuestion,
+} from "lucide-react";
 
 export default function CodeNames() {
   const [wordPool, setWordPool] = useState([]); // All available words
@@ -13,6 +18,7 @@ export default function CodeNames() {
   const [currentTurn, setCurrentTurn] = useState('red'); // 'red' or 'blue'
   const [winner, setWinner] = useState(null); // 'red' | 'blue' | null
   const [showNewGameConfirm, setShowNewGameConfirm] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
 
   // Load words from words.txt
   useEffect(() => {
@@ -160,13 +166,7 @@ export default function CodeNames() {
   const stats = getGameStats();
 
   return (
-    <div className="flex flex-row w-screen h-screen">
-      <SideNav 
-        onResetChat={confirmAndStartNewGame}
-        onToggleCodemaster={toggleCodemasterMode}
-        codemasterMode={codemasterMode}
-        currentTurn={currentTurn}
-      />
+    <div className="flex flex-col w-screen h-screen">
       <div className="flex flex-col flex-1 h-full overflow-hidden">        
         <div className="flex flex-col flex-1 overflow-hidden">
           {/* Win Modal */}
@@ -201,6 +201,61 @@ export default function CodeNames() {
                     className="bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
                   >
                     View Board
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Help Modal */}
+          {isHelpOpen && (
+            <motion.div
+              className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsHelpOpen(false)}
+            >
+              <motion.div
+                className="bg-slate-800 p-6 rounded-xl text-white w-11/12 max-w-md shadow-2xl border border-slate-600"
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.9, y: 20, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <h3 className="text-xl font-semibold mb-4 text-white">
+                  How to Play CodeNames
+                </h3>
+                <div className="space-y-2 text-sm text-slate-300">
+                  <p>
+                    <strong>Objective:</strong> Find all your team's words first.
+                  </p>
+                  <p>
+                    <strong>Red Team:</strong> 9 words
+                  </p>
+                  <p>
+                    <strong>Blue Team:</strong> 8 words
+                  </p>
+                  <p>
+                    <strong>Neutral:</strong> 7 words
+                  </p>
+                  <p>
+                    <strong>Assassin:</strong> 1 word (instant loss)
+                  </p>
+                  <p>
+                    <strong>Codemaster View:</strong> Sees everything.
+                  </p>
+                  <p>
+                    <strong>Player View:</strong> Sees only revealed words.
+                  </p>
+                </div>
+                <div className="flex justify-center mt-6">
+                  <button
+                    onClick={() => setIsHelpOpen(false)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                  >
+                    Got it!
                   </button>
                 </div>
               </motion.div>
@@ -363,30 +418,55 @@ export default function CodeNames() {
                   transition={{ duration: 0.6, delay: 1.4 }}
                   className="text-xs text-gray-500 mt-6"
                 >
-                  Use the sidebar to toggle codemaster view and access game controls
+                  Use the header buttons to toggle codemaster view and access game controls
                 </motion.p>
               </motion.div>
             </div>
           ) : (
             <div className="flex flex-col h-full">
-              <div className="mb-2 text-center bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg">
-                <h2 className="text-xl font-bold text-gray-800 mb-1">
-                  {codemasterMode ? 'Codemaster View' : 'Player View'}
-                </h2>
-                
-                {/* Game Progress */}
-                <div className="flex justify-center gap-4 text-sm">
-                  <div className="flex items-center gap-2 bg-red-100 px-3 py-1 rounded-full">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <span className="font-semibold">Red: {stats.redRevealed}/9</span>
+              <div className="mb-2 bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg relative">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-xl font-bold text-gray-800">
+                    CodeNames
+                  </h2>
+                  
+                  {/* Game Progress - Centered */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-2 bg-red-100 px-3 py-1 rounded-full">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <span className="font-semibold">Red: {stats.redRevealed}/9</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-blue-100 px-3 py-1 rounded-full">
+                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                      <span className="font-semibold">Blue: {stats.blueRevealed}/8</span>
+                    </div>
+                    <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full">
+                      <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+                      <span className="font-semibold">Neutral: {stats.neutralRevealed}/7</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 bg-blue-100 px-3 py-1 rounded-full">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                    <span className="font-semibold">Blue: {stats.blueRevealed}/8</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full">
-                    <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                    <span className="font-semibold">Neutral: {stats.neutralRevealed}/7</span>
+                  
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={confirmAndStartNewGame}
+                      className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm font-semibold transition-colors w-32 justify-center cursor-pointer"
+                    >
+                      <PlusCircle size={14} />
+                      New Game
+                    </button>
+                    <button
+                      onClick={toggleCodemasterMode}
+                      className="flex items-center gap-1 bg-slate-600 hover:bg-slate-700 text-white px-3 py-1 rounded-lg text-sm font-semibold transition-colors w-32 justify-center cursor-pointer"
+                    >
+                      {codemasterMode ? <EyeOff size={14} /> : <Eye size={14} />}
+                      {codemasterMode ? 'Player' : 'Codemaster'}
+                    </button>
+                    <button
+                      onClick={() => setIsHelpOpen(true)}
+                      className="p-1 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors w-8 h-8 flex items-center justify-center"
+                    >
+                      <MessageCircleQuestion size={16} />
+                    </button>
                   </div>
                 </div>
               </div>
