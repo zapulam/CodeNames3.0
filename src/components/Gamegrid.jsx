@@ -1,69 +1,84 @@
-// File: src/components/GameGrid.jsx
 import React, { useState } from "react";
 
 export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
+  const handleCardClick = (index) => {
+    console.log(`=== CARD CLICK DEBUG ===`);
+    console.log(`Index: ${index}`);
+    console.log(`Word: ${words[index]}`);
+    console.log(`Role: ${roles[index]}`);
+    console.log(`Already revealed: ${revealed[index]}`);
+    console.log(`Codemaster mode: ${codemasterMode}`);
+    console.log(`onReveal function exists:`, typeof onReveal === 'function');
+    
+    if (typeof onReveal === 'function') {
+      onReveal(index);
+      console.log(`Called onReveal(${index})`);
+    } else {
+      console.error('onReveal is not a function!');
+    }
+  };
+
   const getCardStyle = (role, isRevealed, index) => {
-    console.log(`Getting style for card ${index}: role=${role}, revealed=${isRevealed}, codemaster=${codemasterMode}`);
-    
-    // Base styles - removed fixed height to make it dynamic
-    let baseStyles = "flex items-center justify-center rounded-lg shadow-lg font-bold p-3 w-full transition-all duration-300";
-    
+    // Base button style
+    let buttonStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+      fontWeight: 'bold',
+      padding: '12px',
+      width: '100%',
+      minHeight: '80px',
+      transition: 'all 0.3s ease',
+      cursor: 'pointer',
+      border: '2px solid',
+      fontSize: '18px'
+    };
+
     // In codemaster mode, show all colors
     if (codemasterMode) {
       switch (role) {
-        case "red": return `${baseStyles} bg-red-500 text-white border-2 border-red-600 cursor-pointer`;
-        case "blue": return `${baseStyles} bg-blue-500 text-white border-2 border-blue-600 cursor-pointer`;
-        case "neutral": return `${baseStyles} bg-gray-400 text-white border-2 border-gray-500 cursor-pointer`;
-        case "assassin": return `${baseStyles} bg-black text-white border-2 border-gray-800 cursor-pointer`;
-        default: return `${baseStyles} bg-yellow-100 text-gray-800 border-2 border-yellow-300 cursor-pointer`;
+        case "red":
+          return { ...buttonStyle, backgroundColor: '#ef4444', color: 'white', borderColor: '#dc2626' };
+        case "blue":
+          return { ...buttonStyle, backgroundColor: '#3b82f6', color: 'white', borderColor: '#2563eb' };
+        case "neutral":
+          return { ...buttonStyle, backgroundColor: '#9ca3af', color: 'white', borderColor: '#6b7280' };
+        case "assassin":
+          return { ...buttonStyle, backgroundColor: '#000000', color: 'white', borderColor: '#374151' };
+        default:
+          return { ...buttonStyle, backgroundColor: '#fef3c7', color: '#1f2937', borderColor: '#fde68a' };
       }
     }
     
     // Not revealed - show yellow
     if (!isRevealed) {
       const isHovered = hoveredIndex === index;
-      return `${baseStyles} ${isHovered ? 'bg-yellow-200 scale-105' : 'bg-yellow-100'} text-gray-800 border-2 border-yellow-300 cursor-pointer`;
+      return { 
+        ...buttonStyle, 
+        backgroundColor: isHovered ? '#fde68a' : '#fef3c7', 
+        color: '#1f2937', 
+        borderColor: '#fde68a',
+        transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+      };
     }
     
     // Revealed - show team color
     switch (role) {
-      case "red": return `${baseStyles} bg-red-500 text-white border-2 border-red-600 cursor-default`;
-      case "blue": return `${baseStyles} bg-blue-500 text-white border-2 border-blue-600 cursor-default`;
-      case "neutral": return `${baseStyles} bg-gray-400 text-white border-2 border-gray-500 cursor-default`;
-      case "assassin": return `${baseStyles} bg-black text-white border-2 border-gray-800 cursor-default`;
-      default: return `${baseStyles} bg-yellow-100 text-gray-800 border-2 border-yellow-300 cursor-pointer`;
+      case "red":
+        return { ...buttonStyle, backgroundColor: '#ef4444', color: 'white', borderColor: '#dc2626' };
+      case "blue":
+        return { ...buttonStyle, backgroundColor: '#3b82f6', color: 'white', borderColor: '#2563eb' };
+      case "neutral":
+        return { ...buttonStyle, backgroundColor: '#9ca3af', color: 'white', borderColor: '#6b7280' };
+      case "assassin":
+        return { ...buttonStyle, backgroundColor: '#000000', color: 'white', borderColor: '#374151' };
+      default:
+        return { ...buttonStyle, backgroundColor: '#fef3c7', color: '#1f2937', borderColor: '#fde68a' };
     }
-  };
-
-  const getInlineStyle = (role, isRevealed) => {
-    if (codemasterMode) {
-      switch (role) {
-        case "red": return { backgroundColor: '#ef4444', color: 'white', border: '2px solid #dc2626' };
-        case "blue": return { backgroundColor: '#3b82f6', color: 'white', border: '2px solid #2563eb' };
-        case "neutral": return { backgroundColor: '#9ca3af', color: 'white', border: '2px solid #6b7280' };
-        case "assassin": return { backgroundColor: '#000000', color: 'white', border: '2px solid #374151' };
-        default: return { backgroundColor: '#fef3c7', color: '#1f2937', border: '2px solid #fde68a' };
-      }
-    }
-    
-    if (!isRevealed) {
-      return { backgroundColor: '#fef3c7', color: '#1f2937', border: '2px solid #fde68a' };
-    }
-    
-    switch (role) {
-      case "red": return { backgroundColor: '#ef4444', color: 'white', border: '2px solid #dc2626' };
-      case "blue": return { backgroundColor: '#3b82f6', color: 'white', border: '2px solid #2563eb' };
-      case "neutral": return { backgroundColor: '#9ca3af', color: 'white', border: '2px solid #6b7280' };
-      case "assassin": return { backgroundColor: '#000000', color: 'white', border: '2px solid #374151' };
-      default: return { backgroundColor: '#fef3c7', color: '#1f2937', border: '2px solid #fde68a' };
-    }
-  };
-
-  const handleCardClick = (index) => {
-    console.log(`Card ${index} clicked!`);
-    onReveal(index);
   };
 
   const handleMouseEnter = (index) => {
@@ -76,10 +91,29 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
     setHoveredIndex(null);
   };
 
-  console.log('GameGrid render:', { words: words.length, revealed, roles: roles.length, codemasterMode });
+  console.log('GameGrid render:', { 
+    wordsLength: words.length, 
+    revealedLength: revealed.length, 
+    rolesLength: roles.length, 
+    codemasterMode,
+    onRevealType: typeof onReveal
+  });
+
+  if (!words || words.length === 0) {
+    return <div>No words to display</div>;
+  }
 
   return (
-    <div className="grid grid-cols-5 gap-4 w-full h-full max-w-6xl mx-auto p-4">
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(5, 1fr)',
+      gap: '16px',
+      width: '100%',
+      height: '100%',
+      maxWidth: '1152px',
+      margin: '0 auto',
+      padding: '16px'
+    }}>
       {words.map((word, idx) => {
         const isRevealed = revealed[idx];
         const cardRole = roles[idx];
@@ -87,14 +121,21 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
         return (
           <button
             key={idx}
-            onClick={() => handleCardClick(idx)}
-            disabled={isRevealed && !codemasterMode}
-            className="flex items-center justify-center rounded-lg shadow-lg font-bold p-3 w-full transition-all duration-300 min-h-[80px] cursor-pointer"
-            style={getInlineStyle(cardRole, isRevealed)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              console.log(`Button ${idx} clicked directly!`);
+              handleCardClick(idx);
+            }}
+            style={getCardStyle(cardRole, isRevealed, idx)}
             onMouseEnter={() => handleMouseEnter(idx)}
             onMouseLeave={handleMouseLeave}
           >
-            <span className="text-center leading-tight font-bold text-sm md:text-base lg:text-lg">
+            <span style={{
+              textAlign: 'center',
+              lineHeight: '1.2',
+              fontWeight: 'bold'
+            }}>
               {word}
             </span>
           </button>

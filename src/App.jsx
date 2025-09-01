@@ -172,33 +172,36 @@ export default function CodeNames() {
           {/* Win Modal */}
           {winner && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setWinner(null)}
             >
               <motion.div
-                className="bg-slate-800 p-8 rounded-xl text-white w-11/12 max-w-md shadow-2xl border border-slate-600 flex flex-col items-center"
+                className="bg-gray-900/95 backdrop-blur-xl p-8 rounded-3xl text-gray-100 w-11/12 max-w-md shadow-2xl border border-gray-700/50 flex flex-col items-center"
                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h2 className="text-3xl font-bold mb-4">
-                  {winner === 'red' ? 'Red Team Wins! 🎉' : 'Blue Team Wins! 🎉'}
-                </h2>
+                <div className="text-center mb-6">
+                  <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                    {winner === 'red' ? 'Red Team Wins!' : 'Blue Team Wins!'}
+                  </h2>
+                  <div className="text-6xl mb-4">🎉</div>
+                </div>
                 <div className="flex gap-4 mt-6">
                   <button
                     onClick={() => { setWinner(null); confirmAndStartNewGame(); }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Start New Game
                   </button>
                   <button
                     onClick={() => setWinner(null)}
-                    className="bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                    className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     View Board
                   </button>
@@ -210,50 +213,56 @@ export default function CodeNames() {
           {/* Help Modal */}
           {isHelpOpen && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsHelpOpen(false)}
             >
               <motion.div
-                className="bg-slate-800 p-6 rounded-xl text-white w-11/12 max-w-md shadow-2xl border border-slate-600"
+                className="bg-gray-900/95 backdrop-blur-xl p-8 text-gray-100 w-11/12 max-w-md shadow-2xl border border-gray-700/50"
                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <h3 className="text-xl font-semibold mb-4 text-white">
+                <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   How to Play CodeNames
                 </h3>
-                <div className="space-y-2 text-sm text-slate-300">
-                  <p>
-                    <strong>Objective:</strong> Find all your team's words first.
-                  </p>
-                  <p>
-                    <strong>Red Team:</strong> 9 words
-                  </p>
-                  <p>
-                    <strong>Blue Team:</strong> 8 words
-                  </p>
-                  <p>
-                    <strong>Neutral:</strong> 7 words
-                  </p>
-                  <p>
-                    <strong>Assassin:</strong> 1 word (instant loss)
-                  </p>
-                  <p>
-                    <strong>Codemaster View:</strong> Sees everything.
-                  </p>
-                  <p>
-                    <strong>Player View:</strong> Sees only revealed words.
-                  </p>
+                <div className="space-y-4 text-sm text-gray-300">
+                  <div className="bg-gradient-to-r from-blue-900/50 to-blue-800/50 p-4 rounded-xl border border-blue-700/50">
+                    <p className="font-semibold text-blue-200 mb-2">Objective:</p>
+                    <p>Find all your team's words first.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gradient-to-r from-red-900/50 to-red-800/50 p-3 rounded-xl border border-red-700/50">
+                      <p className="font-semibold text-red-200">Red Team:</p>
+                      <p className="text-red-300">9 words</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-blue-900/50 to-blue-800/50 p-3 rounded-xl border border-blue-700/50">
+                      <p className="font-semibold text-blue-200">Blue Team:</p>
+                      <p className="text-blue-300">8 words</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-gray-800/50 to-gray-700/50 p-3 rounded-xl border border-gray-600/50">
+                      <p className="font-semibold text-gray-200">Neutral:</p>
+                      <p className="text-gray-300">7 words</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-purple-900/50 to-purple-800/50 p-3 rounded-xl border border-purple-700/50">
+                      <p className="font-semibold text-purple-200">Assassin:</p>
+                      <p className="text-purple-300">1 word (instant loss)</p>
+                    </div>
+                  </div>
+                  <div className="bg-gradient-to-r from-green-900/50 to-green-800/50 p-4 rounded-xl border border-green-700/50">
+                    <p className="font-semibold text-green-200 mb-2">Views:</p>
+                    <p className="text-green-300"><strong>Codemaster View:</strong> Sees everything.</p>
+                    <p className="text-green-300"><strong>Player View:</strong> Sees only revealed words.</p>
+                  </div>
                 </div>
-                <div className="flex justify-center mt-6">
+                <div className="flex justify-center mt-8">
                   <button
                     onClick={() => setIsHelpOpen(false)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Got it!
                   </button>
@@ -265,36 +274,36 @@ export default function CodeNames() {
           {/* New Game Confirmation Modal */}
           {showNewGameConfirm && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50"
+              className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setShowNewGameConfirm(false)}
             >
               <motion.div
-                className="bg-slate-800 p-8 rounded-xl text-white w-11/12 max-w-md shadow-2xl border border-slate-600 flex flex-col items-center"
+                className="bg-gray-900/95 backdrop-blur-xl p-8 rounded-3xl text-gray-100 w-11/12 max-w-md shadow-2xl border border-gray-700/50 flex flex-col items-center"
                 initial={{ scale: 0.9, y: 20, opacity: 0 }}
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 exit={{ scale: 0.9, y: 20, opacity: 0 }}
                 transition={{ duration: 0.3 }}
                 onClick={e => e.stopPropagation()}
               >
-                <h2 className="text-2xl font-bold mb-4 text-center">
+                <h2 className="text-3xl font-bold mb-4 text-center bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                   Start New Game?
                 </h2>
-                <p className="text-slate-300 text-center mb-6">
+                <p className="text-gray-300 text-center mb-8 text-lg">
                   A game is already in progress. Starting a new game will overwrite the current one.
                 </p>
                 <div className="flex gap-4">
                   <button
                     onClick={() => { setShowNewGameConfirm(false); startNewGame(); }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Start New Game
                   </button>
                   <button
                     onClick={() => setShowNewGameConfirm(false)}
-                    className="bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer transition-colors"
+                    className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Cancel
                   </button>
@@ -303,19 +312,19 @@ export default function CodeNames() {
             </motion.div>
           )}
           {!gameStarted ? (
-            <div className="flex flex-col items-center justify-center flex-1 relative overflow-hidden">
+            <div className="flex flex-col items-center justify-center flex-1 relative overflow-hidden bg-gray-900">
               {/* Background decorative elements */}
               <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-400/20 to-purple-400/20 rounded-full blur-3xl"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-300/10 to-purple-300/10 rounded-full blur-3xl"></div>
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
               </div>
 
               <motion.div
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="relative text-center bg-white/90 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-white/20 max-w-2xl mx-4"
+                className="relative text-center bg-gray-800/90 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-gray-700/50 max-w-2xl mx-4"
               >
                 {/* Logo/Icon */}
                 <motion.div
@@ -331,7 +340,7 @@ export default function CodeNames() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-6xl font-bold bg-clip-text mb-6 tracking-tight"
+                  className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 tracking-tight animate-pulse"
                 >
                   CodeNames
                 </motion.h1>
@@ -341,7 +350,7 @@ export default function CodeNames() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.6 }}
-                  className="text-xl text-gray-700 mb-8 font-medium"
+                  className="text-xl text-gray-300 mb-8 font-medium"
                 >
                   The ultimate word association game for teams
                 </motion.p>
@@ -353,16 +362,16 @@ export default function CodeNames() {
                   transition={{ duration: 0.6, delay: 0.8 }}
                   className="mb-8"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600">
-                    <div className="flex items-center gap-2 bg-red-50 px-3 py-2 rounded-lg">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
+                    <div className="flex items-center gap-2 bg-red-900/30 px-3 py-2 rounded-lg border border-red-700/30">
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <span>Red Team: 9 words</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-blue-50 px-3 py-2 rounded-lg">
+                    <div className="flex items-center gap-2 bg-blue-900/30 px-3 py-2 rounded-lg border border-blue-700/30">
                       <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                       <span>Blue Team: 8 words</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg">
+                    <div className="flex items-center gap-2 bg-gray-800/30 px-3 py-2 rounded-lg border border-gray-600/30">
                       <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
                       <span>Neutral: 7 words</span>
                     </div>
@@ -376,9 +385,9 @@ export default function CodeNames() {
                   transition={{ duration: 0.5, delay: 1.0 }}
                   className="mb-8"
                 >
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-50 to-blue-50 px-4 py-2 rounded-full border border-green-200">
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-900/30 to-blue-900/30 px-4 py-2 rounded-full border border-green-700/30">
                     <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-sm font-medium text-gray-300">
                       {wordPool.length} words loaded and ready
                     </span>
                   </div>
@@ -416,62 +425,74 @@ export default function CodeNames() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.6, delay: 1.4 }}
-                  className="text-xs text-gray-500 mt-6"
+                  className="text-xs text-gray-400 mt-6"
                 >
                   Use the header buttons to toggle codemaster view and access game controls
                 </motion.p>
               </motion.div>
             </div>
           ) : (
-            <div className="flex flex-col h-full">
-              <div className="mb-2 bg-white/80 backdrop-blur-sm rounded-xl p-3 shadow-lg relative">
+            <div className="flex flex-col h-full bg-gray-900 relative overflow-hidden">
+              {/* Background decorative elements */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
+              </div>
+              <div className="mb-4 bg-gray-900/90 backdrop-blur-xl p-4 shadow-xl border border-gray-700/50 relative">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-xl font-bold text-gray-800">
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
                     CodeNames
                   </h2>
                   
                   {/* Game Progress - Centered */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-2 bg-red-100 px-3 py-1 rounded-full">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <span className="font-semibold">Red: {stats.redRevealed}/9</span>
+                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6">
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-red-900/50 to-red-800/50 px-4 py-2 rounded-full border border-red-700/50 shadow-sm">
+                      <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-sm"></div>
+                      <span className="font-semibold text-red-200">Red: {stats.redRevealed}/9</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-blue-100 px-3 py-1 rounded-full">
-                      <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                      <span className="font-semibold">Blue: {stats.blueRevealed}/8</span>
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-blue-900/50 to-blue-800/50 px-4 py-2 rounded-full border border-blue-700/50 shadow-sm">
+                      <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
+                      <span className="font-semibold text-blue-200">Blue: {stats.blueRevealed}/8</span>
                     </div>
-                    <div className="flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full">
-                      <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-                      <span className="font-semibold">Neutral: {stats.neutralRevealed}/7</span>
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-4 py-2 rounded-full border border-gray-600/50 shadow-sm">
+                      <div className="w-3 h-3 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full shadow-sm"></div>
+                      <span className="font-semibold text-gray-300">Neutral: {stats.neutralRevealed}/7</span>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <button
                       onClick={confirmAndStartNewGame}
-                      className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm font-semibold transition-colors w-32 justify-center cursor-pointer"
+                      title="Start New Game"
+                      className="group relative p-2 text-blue-400 hover:text-blue-300 hover:bg-blue-900/30 rounded-xl transition-all duration-200 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95 border border-blue-600/30 hover:border-blue-500/50 cursor-pointer"
                     >
-                      <PlusCircle size={14} />
-                      New Game
+                      <PlusCircle size={18} />
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-900 text-gray-100 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-gray-700/50 shadow-lg">
+                        Start New Game
+                      </div>
                     </button>
                     <button
                       onClick={toggleCodemasterMode}
-                      className="flex items-center gap-1 bg-slate-600 hover:bg-slate-700 text-white px-3 py-1 rounded-lg text-sm font-semibold transition-colors w-32 justify-center cursor-pointer"
+                      title={codemasterMode ? "Switch to Player View" : "Switch to Codemaster View"}
+                      className="group relative p-2 text-green-400 hover:text-green-300 hover:bg-green-900/30 rounded-xl transition-all duration-200 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95 border border-green-600/30 hover:border-green-500/50 cursor-pointer"
                     >
-                      {codemasterMode ? <EyeOff size={14} /> : <Eye size={14} />}
-                      {codemasterMode ? 'Player' : 'Codemaster'}
+                      {codemasterMode ? <EyeOff size={18} /> : <Eye size={18} />}
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-900 text-gray-100 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-gray-700/50 shadow-lg">
+                        {codemasterMode ? "Switch to Player View" : "Switch to Codemaster View"}
+                      </div>
                     </button>
                     <button
                       onClick={() => setIsHelpOpen(true)}
-                      className="p-1 text-gray-600 hover:bg-gray-200 rounded-lg transition-colors w-8 h-8 flex items-center justify-center"
+                      className="p-2 text-purple-400 hover:text-purple-300 hover:bg-purple-900/30 rounded-xl transition-all duration-200 w-10 h-10 flex items-center justify-center shadow-sm hover:shadow-md transform hover:scale-105 active:scale-95 border border-purple-600/30 hover:border-purple-500/50 cursor-pointer"
                     >
-                      <MessageCircleQuestion size={16} />
+                      <MessageCircleQuestion size={18} />
                     </button>
                   </div>
                 </div>
               </div>
               
-              <div className="flex-1 flex items-center justify-center overflow-hidden p-2">
+              <div className="flex-1 flex items-center justify-center overflow-hidden">
                 <GameGrid
                   words={gameWords}
                   revealed={revealed}
