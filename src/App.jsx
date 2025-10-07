@@ -15,8 +15,8 @@ export default function CodeNames() {
   const [revealed, setRevealed] = useState([]);
   const [codemasterMode, setCodemasterMode] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
-  const [currentTurn, setCurrentTurn] = useState('red'); // 'red' or 'blue'
-  const [winner, setWinner] = useState(null); // 'red' | 'blue' | 'assassin' | null
+  const [currentTurn, setCurrentTurn] = useState('green'); // 'green' or 'blue'
+  const [winner, setWinner] = useState(null); // 'green' | 'blue' | 'assassin' | null
   const [showNewGameConfirm, setShowNewGameConfirm] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
 
@@ -57,9 +57,9 @@ export default function CodeNames() {
     console.log('Selected game words:', shuffledWords);
     setGameWords(shuffledWords);
     
-    // Create roles: 9 red, 8 blue, 7 neutral, 1 assassin
+    // Create roles: 9 green, 8 blue, 7 neutral, 1 assassin
     const newRoles = [];
-    for (let i = 0; i < 9; i++) newRoles.push('red');
+    for (let i = 0; i < 9; i++) newRoles.push('green');
     for (let i = 0; i < 8; i++) newRoles.push('blue');
     for (let i = 0; i < 7; i++) newRoles.push('neutral');
     newRoles.push('assassin');
@@ -72,7 +72,7 @@ export default function CodeNames() {
     setRevealed(new Array(25).fill(false));
     setCodemasterMode(false);
     setGameStarted(true);
-    setCurrentTurn('red');
+    setCurrentTurn('green');
     setWinner(null);
     
     console.log('Game initialized successfully');
@@ -123,7 +123,7 @@ export default function CodeNames() {
     
     // Check if current team's turn should continue
     if (roles[index] !== currentTurn) {
-      const newTurn = currentTurn === 'red' ? 'blue' : 'red';
+      const newTurn = currentTurn === 'green' ? 'blue' : 'green';
       console.log(`Switching turn from ${currentTurn} to ${newTurn}`);
       setCurrentTurn(newTurn);
     } else {
@@ -131,11 +131,11 @@ export default function CodeNames() {
     }
     
     // Check for win conditions with updated revealed state
-    const redRevealed = roles.map((role, idx) => role === 'red' && newRevealed[idx]).filter(Boolean).length;
+    const greenRevealed = roles.map((role, idx) => role === 'green' && newRevealed[idx]).filter(Boolean).length;
     const blueRevealed = roles.map((role, idx) => role === 'blue' && newRevealed[idx]).filter(Boolean).length;
     
-    if (redRevealed === 9) {
-      setWinner('red');
+    if (greenRevealed === 9) {
+      setWinner('green');
     } else if (blueRevealed === 8) {
       setWinner('blue');
     }
@@ -143,11 +143,11 @@ export default function CodeNames() {
 
   // Check if a team has won
   const checkWinCondition = () => {
-    const redRevealed = roles.map((role, index) => role === 'red' && revealed[index]).filter(Boolean).length;
+    const greenRevealed = roles.map((role, index) => role === 'green' && revealed[index]).filter(Boolean).length;
     const blueRevealed = roles.map((role, index) => role === 'blue' && revealed[index]).filter(Boolean).length;
     
-    if (redRevealed === 9) {
-      setWinner('red');
+    if (greenRevealed === 9) {
+      setWinner('green');
     } else if (blueRevealed === 8) {
       setWinner('blue');
     }
@@ -160,11 +160,11 @@ export default function CodeNames() {
 
   // Get game statistics
   const getGameStats = () => {
-    const redRevealed = roles.map((role, index) => role === 'red' && revealed[index]).filter(Boolean).length;
+    const greenRevealed = roles.map((role, index) => role === 'green' && revealed[index]).filter(Boolean).length;
     const blueRevealed = roles.map((role, index) => role === 'blue' && revealed[index]).filter(Boolean).length;
     const neutralRevealed = roles.map((role, index) => role === 'neutral' && revealed[index]).filter(Boolean).length;
     
-    return { redRevealed, blueRevealed, neutralRevealed };
+    return { greenRevealed, blueRevealed, neutralRevealed };
   };
 
   const stats = getGameStats();
@@ -192,7 +192,7 @@ export default function CodeNames() {
               >
                 <div className="text-center mb-6">
                   <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    {winner === 'assassin' ? 'You lose!' : (winner === 'red' ? 'Red Team Wins!' : 'Blue Team Wins!')}
+                    {winner === 'assassin' ? 'You lose!' : (winner === 'green' ? 'Green Team Wins!' : 'Blue Team Wins!')}
                   </h2>
                   <div className="text-6xl mb-4">{winner === 'assassin' ? '💀' : '🎉'}</div>
                 </div>
@@ -247,9 +247,9 @@ export default function CodeNames() {
                     <p>Find all your team's words first.</p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gradient-to-r from-red-900/50 to-red-800/50 p-3 rounded-xl border border-red-700/50">
-                      <p className="font-semibold text-red-200">Red Team:</p>
-                      <p className="text-red-300">9 words</p>
+                    <div className="bg-gradient-to-r from-green-900/50 to-green-800/50 p-3 rounded-xl border border-green-700/50">
+                      <p className="font-semibold text-green-200">Green Team:</p>
+                      <p className="text-green-300">9 words</p>
                     </div>
                     <div className="bg-gradient-to-r from-blue-900/50 to-blue-800/50 p-3 rounded-xl border border-blue-700/50">
                       <p className="font-semibold text-blue-200">Blue Team:</p>
@@ -374,9 +374,9 @@ ui              <div className="absolute inset-0 overflow-hidden pointer-events-
                   className="mb-8"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
-                    <div className="flex items-center gap-2 bg-red-900/30 px-3 py-2 rounded-lg border border-red-700/30">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <span>Red Team: 9 words</span>
+                    <div className="flex items-center gap-2 bg-green-900/30 px-3 py-2 rounded-lg border border-green-700/30">
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                      <span>Green Team: 9 words</span>
                     </div>
                     <div className="flex items-center gap-2 bg-blue-900/30 px-3 py-2 rounded-lg border border-blue-700/30">
                       <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
@@ -458,9 +458,9 @@ ui              <div className="absolute inset-0 overflow-hidden pointer-events-
                   
                   {/* Game Progress - Centered */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6">
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-red-900/50 to-red-800/50 px-4 py-2 rounded-full border border-red-700/50 shadow-sm">
-                      <div className="w-3 h-3 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-sm"></div>
-                      <span className="font-semibold text-red-200">Red: {stats.redRevealed}/9</span>
+                    <div className="flex items-center gap-3 bg-gradient-to-r from-green-900/50 to-green-800/50 px-4 py-2 rounded-full border border-green-700/50 shadow-sm">
+                      <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-sm"></div>
+                      <span className="font-semibold text-green-200">Green: {stats.greenRevealed}/9</span>
                     </div>
                     <div className="flex items-center gap-3 bg-gradient-to-r from-blue-900/50 to-blue-800/50 px-4 py-2 rounded-full border border-blue-700/50 shadow-sm">
                       <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-sm"></div>

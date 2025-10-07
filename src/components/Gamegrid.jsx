@@ -41,8 +41,8 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
     // In codemaster mode, show all colors
     if (codemasterMode) {
       switch (role) {
-        case "red":
-          return { ...buttonStyle, backgroundColor: '#ef4444', color: 'white', borderColor: '#dc2626' };
+        case "green":
+          return { ...buttonStyle, backgroundColor: '#22c55e', color: 'white', borderColor: '#16a34a' };
         case "blue":
           return { ...buttonStyle, backgroundColor: '#3b82f6', color: 'white', borderColor: '#2563eb' };
         case "neutral":
@@ -68,8 +68,8 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
     
     // Revealed - show team color
     switch (role) {
-      case "red":
-        return { ...buttonStyle, backgroundColor: '#ef4444', color: 'white', borderColor: '#dc2626' };
+      case "green":
+        return { ...buttonStyle, backgroundColor: '#22c55e', color: 'white', borderColor: '#16a34a' };
       case "blue":
         return { ...buttonStyle, backgroundColor: '#3b82f6', color: 'white', borderColor: '#2563eb' };
       case "neutral":
