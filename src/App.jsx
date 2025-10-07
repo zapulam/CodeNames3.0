@@ -16,7 +16,7 @@ export default function CodeNames() {
   const [codemasterMode, setCodemasterMode] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [currentTurn, setCurrentTurn] = useState('red'); // 'red' or 'blue'
-  const [winner, setWinner] = useState(null); // 'red' | 'blue' | null
+  const [winner, setWinner] = useState(null); // 'red' | 'blue' | 'assassin' | null
   const [showNewGameConfirm, setShowNewGameConfirm] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
 
@@ -95,6 +95,11 @@ export default function CodeNames() {
     console.log(`Game words:`, gameWords);
     console.log(`Roles:`, roles);
     
+    if (winner) {
+      console.log('Game already ended, ignoring reveal');
+      return;
+    }
+    
     if (revealed[index]) {
       console.log('Card already revealed, returning');
       return;
@@ -110,8 +115,7 @@ export default function CodeNames() {
     // Check if assassin was revealed
     if (roles[index] === 'assassin') {
       console.log('Assassin revealed! Game over!');
-      setWinner('red'); // Assuming red team loses
-      setGameStarted(false);
+      setWinner('assassin');
       return;
     }
     
@@ -188,13 +192,20 @@ export default function CodeNames() {
               >
                 <div className="text-center mb-6">
                   <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                    {winner === 'red' ? 'Red Team Wins!' : 'Blue Team Wins!'}
+                    {winner === 'assassin' ? 'You lose!' : (winner === 'red' ? 'Red Team Wins!' : 'Blue Team Wins!')}
                   </h2>
-                  <div className="text-6xl mb-4">🎉</div>
+                  <div className="text-6xl mb-4">{winner === 'assassin' ? '💀' : '🎉'}</div>
                 </div>
                 <div className="flex gap-4 mt-6">
                   <button
-                    onClick={() => { setWinner(null); confirmAndStartNewGame(); }}
+                    onClick={() => {
+                      if (winner === 'assassin') {
+                        startNewGame();
+                      } else {
+                        setWinner(null);
+                        confirmAndStartNewGame();
+                      }
+                    }}
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Start New Game
