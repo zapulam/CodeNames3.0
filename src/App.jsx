@@ -355,47 +355,23 @@ export default function CodeNames() {
               </div>
 
               <motion.div
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
                 className="relative text-center bg-gray-800/90 backdrop-blur-xl rounded-3xl p-12 shadow-2xl border border-gray-700/50 max-w-2xl mx-4"
               >
-                {/* Logo/Icon */}
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
-                  className="mb-8"
-                >
-                </motion.div>
-
                 {/* Title */}
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 tracking-tight animate-pulse"
-                >
+                <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 tracking-tight">
                   CodeNames
-                </motion.h1>
+                </h1>
 
                 {/* Subtitle */}
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.6 }}
-                  className="text-xl text-gray-300 mb-8 font-medium"
-                >
+                <p className="text-xl text-gray-300 mb-8 font-medium">
                   The ultimate word association game for teams
-                </motion.p>
+                </p>
 
                 {/* Game description */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  className="mb-8"
-                >
+                <div className="mb-8">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
                     <div className="flex items-center gap-2 bg-green-900/30 px-3 py-2 rounded-lg border border-green-700/30">
                       <div className="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -410,59 +386,37 @@ export default function CodeNames() {
                       <span>Neutral: 7 words</span>
                     </div>
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Word count */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: 1.0 }}
-                  className="mb-8"
-                >
+                <div className="mb-8">
                   <div className="inline-flex items-center gap-2 bg-gradient-to-r from-green-900/30 to-blue-900/30 px-4 py-2 rounded-full border border-green-700/30">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span className="text-sm font-medium text-gray-300">
                       {wordPool.length} words loaded and ready
                     </span>
                   </div>
-                </motion.div>
+                </div>
 
                 {/* Start button */}
-                <motion.button
+                <button
                   onClick={confirmAndStartNewGame}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 1.2 }}
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-12 py-5 rounded-2xl font-bold text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform cursor-pointer"
+                  className="group relative bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white px-12 py-5 rounded-2xl font-bold text-lg transition-all duration-200 shadow-xl hover:shadow-lg cursor-pointer"
                 >
                   <span className="relative z-10 flex items-center gap-3">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                      className="w-5 h-5"
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
-                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </motion.div>
+                    <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+                      <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                     Start New Game
                   </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm"></div>
-                </motion.button>
+                </button>
 
                 {/* Footer text */}
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 1.4 }}
-                  className="text-xs text-gray-400 mt-6"
-                >
+                <p className="text-xs text-gray-400 mt-6">
                   Use the header buttons to toggle codemaster view and access game controls
-                </motion.p>
+                </p>
               </motion.div>
             </div>
           ) : (
@@ -475,7 +429,7 @@ export default function CodeNames() {
               </div>
               <div className="mb-4 bg-gray-900/90 backdrop-blur-xl p-4 shadow-xl border border-gray-700/50 relative z-10 flex-shrink-0">
                 <div className="relative flex items-center justify-between w-full">
-                  <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse flex-shrink-0">
+                  <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent flex-shrink-0">
                     CodeNames
                   </h2>
                   {/* Game Progress - Desktop only, centered in header */}

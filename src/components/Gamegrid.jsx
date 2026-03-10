@@ -1,22 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
   const handleCardClick = (index) => {
-    console.log(`=== CARD CLICK DEBUG ===`);
-    console.log(`Index: ${index}`);
-    console.log(`Word: ${words[index]}`);
-    console.log(`Role: ${roles[index]}`);
-    console.log(`Already revealed: ${revealed[index]}`);
-    console.log(`Codemaster mode: ${codemasterMode}`);
-    console.log(`onReveal function exists:`, typeof onReveal === 'function');
-    
     if (typeof onReveal === 'function') {
       onReveal(index);
-      console.log(`Called onReveal(${index})`);
-    } else {
-      console.error('onReveal is not a function!');
     }
   };
 
@@ -30,7 +17,7 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
       padding: '12px',
       width: '100%',
-      transition: 'all 0.3s ease',
+      transition: 'background-color 0.2s ease, border-color 0.2s ease',
       cursor: 'pointer',
       border: '2px solid',
     };
@@ -51,15 +38,12 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
       }
     }
     
-    // Not revealed - show yellow
+    // Not revealed - show yellow (base + hover via className for stability)
     if (!isRevealed) {
-      const isHovered = hoveredIndex === index;
       return { 
         ...buttonStyle, 
-        backgroundColor: isHovered ? '#fde68a' : '#fef3c7', 
         color: '#1f2937', 
         borderColor: '#fde68a',
-        transform: isHovered ? 'scale(1.05)' : 'scale(1)'
       };
     }
     
@@ -78,24 +62,6 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
     }
   };
 
-  const handleMouseEnter = (index) => {
-    if (!revealed[index] && !codemasterMode) {
-      setHoveredIndex(index);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredIndex(null);
-  };
-
-  console.log('GameGrid render:', { 
-    wordsLength: words.length, 
-    revealedLength: revealed.length, 
-    rolesLength: roles.length, 
-    codemasterMode,
-    onRevealType: typeof onReveal
-  });
-
   if (!words || words.length === 0) {
     return <div>No words to display</div>;
   }
@@ -112,13 +78,10 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              console.log(`Button ${idx} clicked directly!`);
               handleCardClick(idx);
             }}
             style={getCardStyle(cardRole, isRevealed, idx)}
-            className="min-h-14 md:min-h-20 text-xs md:text-base font-medium md:font-bold tracking-tight md:tracking-normal"
-            onMouseEnter={() => handleMouseEnter(idx)}
-            onMouseLeave={handleMouseLeave}
+            className={`min-h-14 md:min-h-20 text-xs md:text-base font-medium md:font-bold tracking-tight md:tracking-normal ${!isRevealed && !codemasterMode ? 'bg-[#fef3c7] hover:bg-[#fde68a]' : ''}`}
           >
             <span className="text-center" style={{ lineHeight: '1.2' }}>
               {word}
