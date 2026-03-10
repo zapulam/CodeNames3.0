@@ -2,6 +2,8 @@
 
 A modern, interactive web implementation of the popular word association game CodeNames, built with React, Tailwind CSS, and Framer Motion.
 
+Play for free ![here](https://zapulam.github.io/CodeNames3.0/).
+
 ![CodeNames Game](https://img.shields.io/badge/React-19.0.0-blue) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0.6-38B2AC) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.4.1-purple)
 
 ## 🎮 Game Overview
@@ -80,61 +82,6 @@ npm run preview
 - **Collapse Sidebar**: Minimize the sidebar for more game space
 - **Help**: Access game rules and instructions
 
-## 🛠️ Technical Stack
-
-- **Frontend Framework**: React 19.0.0
-- **Styling**: Tailwind CSS 4.0.6
-- **Animations**: Framer Motion 12.4.1
-- **Icons**: Lucide React
-- **Build Tool**: Vite 6.1.0
-- **Package Manager**: npm
-
-### Key Dependencies
-- `react`: Core framework
-- `framer-motion`: Smooth animations and transitions
-- `lucide-react`: Modern icon library
-- `tailwindcss`: Utility-first CSS framework
-- `@tailwindcss/vite`: Tailwind CSS v4 integration
-
-## 📁 Project Structure
-
-```
-CodeNames3.0/
-├── src/
-│   ├── components/
-│   │   ├── Sidebar.jsx          # Navigation and controls
-│   │   └── Gamegrid.jsx         # Main game board
-│   ├── data/
-│   │   └── words.txt            # Word list for games
-│   ├── App.jsx                  # Main application component
-│   ├── main.jsx                 # Application entry point
-│   ├── tailwind.css             # Tailwind CSS configuration
-│   └── index.css                # Global styles
-├── public/                      # Static assets
-├── package.json                 # Dependencies and scripts
-├── vite.config.js              # Vite configuration
-├── tailwind.config.js          # Tailwind CSS configuration
-└── README.md                   # This file
-```
-
-## 🎨 Design Features
-
-### Dark Theme
-- Consistent slate color palette
-- High contrast for readability
-- Smooth color transitions
-
-### Animations
-- Sidebar collapse/expand with text sliding
-- Card reveal animations
-- Modal popups with scale and fade effects
-- Button hover states
-
-### Responsive Layout
-- Flexbox-based layout system
-- Mobile-friendly design
-- Adaptive sidebar behavior
-
 ## 🔧 Development
 
 ### Available Scripts
@@ -143,27 +90,9 @@ CodeNames3.0/
 - `npm run preview`: Preview production build
 - `npm run lint`: Run ESLint
 
-### Code Style
-- ESLint configuration for code quality
-- Consistent formatting with Prettier
-- React best practices
-
-## 🎯 Game Logic
-
-### Word Selection
-- Random selection from 400+ curated words
-- No duplicate words in a single game
-- Balanced word difficulty
-
-### Win Detection
-- Real-time win condition checking
-- Automatic game state updates
-- Themed victory popups
-
-### Turn Management
-- Automatic turn switching
-- Visual turn indicators
-- Game progress tracking
+## Deployment
+- `npm run build`: Build for production
+- `npm run deploy`: Deploy to Github pages
 
 ## 🤝 Contributing
 
@@ -176,18 +105,6 @@ CodeNames3.0/
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-- Original CodeNames game by Vlaada Chvátil
-- React team for the amazing framework
-- Tailwind CSS for the utility-first approach
-- Framer Motion for smooth animations
-- Lucide for beautiful icons
-
-## 🐛 Known Issues
-
-- None currently reported
 
 ## 📞 Support
 

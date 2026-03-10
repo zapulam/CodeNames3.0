@@ -21,21 +21,18 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
   };
 
   const getCardStyle = (role, isRevealed, index) => {
-    // Base button style
+    // Base button style - minHeight and fontSize overridden by className for responsive
     let buttonStyle = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       borderRadius: '8px',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-      fontWeight: 'bold',
       padding: '12px',
       width: '100%',
-      minHeight: '80px',
       transition: 'all 0.3s ease',
       cursor: 'pointer',
       border: '2px solid',
-      fontSize: '18px'
     };
 
     // In codemaster mode, show all colors
@@ -104,16 +101,7 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
   }
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateColumns: 'repeat(5, 1fr)',
-      gap: '16px',
-      width: '100%',
-      height: '100%',
-      maxWidth: '1152px',
-      margin: '0 auto',
-      padding: '16px'
-    }}>
+    <div className="grid grid-cols-5 gap-2 md:gap-4 w-full mx-auto p-2 md:p-4">
       {words.map((word, idx) => {
         const isRevealed = revealed[idx];
         const cardRole = roles[idx];
@@ -128,14 +116,11 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
               handleCardClick(idx);
             }}
             style={getCardStyle(cardRole, isRevealed, idx)}
+            className="min-h-14 md:min-h-20 text-xs md:text-base font-medium md:font-bold tracking-tight md:tracking-normal"
             onMouseEnter={() => handleMouseEnter(idx)}
             onMouseLeave={handleMouseLeave}
           >
-            <span style={{
-              textAlign: 'center',
-              lineHeight: '1.2',
-              fontWeight: 'bold'
-            }}>
+            <span className="text-center" style={{ lineHeight: '1.2' }}>
               {word}
             </span>
           </button>

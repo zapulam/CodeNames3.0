@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { GameGrid } from "./components/Gamegrid";
 import {
@@ -7,9 +7,15 @@ import {
   EyeOff,
   MessageCircleQuestion,
 } from "lucide-react";
+import wordsContent from './data/words.txt?raw';
 
 export default function CodeNames() {
-  const [wordPool, setWordPool] = useState([]); // All available words
+  const [wordPool] = useState(() => {
+    const wordList = wordsContent.split('\n')
+      .map(word => word.trim())
+      .filter(word => word.length > 0);
+    return wordList;
+  });
   const [gameWords, setGameWords] = useState([]); // 25 words for current game
   const [roles, setRoles] = useState([]);
   const [revealed, setRevealed] = useState([]);
@@ -18,29 +24,8 @@ export default function CodeNames() {
   const [currentTurn, setCurrentTurn] = useState('green'); // 'green' or 'blue'
   const [winner, setWinner] = useState(null); // 'green' | 'blue' | 'assassin' | null
   const [showNewGameConfirm, setShowNewGameConfirm] = useState(false);
+  const [showMobileRecommendModal, setShowMobileRecommendModal] = useState(false);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
-
-  // Load words from words.txt
-  useEffect(() => {
-    const loadWords = async () => {
-      try {
-        const response = await fetch('/src/data/words.txt');
-        if (!response.ok) {
-          throw new Error('Failed to load words file');
-        }
-        const text = await response.text();
-        const wordList = text.split('\n')
-          .map(word => word.trim())
-          .filter(word => word.length > 0);
-        setWordPool(wordList);
-      } catch (error) {
-        console.error('Error loading words:', error);
-        alert('Failed to load words. Please check that the words.txt file exists in the data folder.');
-      }
-    };
-
-    loadWords();
-  }, []);
 
   // Initialize new game
   const startNewGame = () => {
@@ -83,7 +68,11 @@ export default function CodeNames() {
     if (gameStarted) {
       setShowNewGameConfirm(true);
     } else {
-      startNewGame();
+      if (window.matchMedia('(max-width: 767px)').matches) {
+        setShowMobileRecommendModal(true);
+      } else {
+        startNewGame();
+      }
     }
   };
 
@@ -199,12 +188,8 @@ export default function CodeNames() {
                 <div className="flex gap-4 mt-6">
                   <button
                     onClick={() => {
-                      if (winner === 'assassin') {
-                        startNewGame();
-                      } else {
-                        setWinner(null);
-                        confirmAndStartNewGame();
-                      }
+                      setWinner(null);
+                      startNewGame();
                     }}
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
@@ -314,6 +299,44 @@ export default function CodeNames() {
                   </button>
                   <button
                     onClick={() => setShowNewGameConfirm(false)}
+                    className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+
+          {/* Mobile Recommend Larger Screen Modal */}
+          {showMobileRecommendModal && (
+            <motion.div
+              className="fixed inset-0 bg-black/70 backdrop-blur-md flex justify-center items-center z-50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowMobileRecommendModal(false)}
+            >
+              <motion.div
+                className="bg-gray-900/95 backdrop-blur-xl p-8 rounded-3xl text-gray-100 w-11/12 max-w-md shadow-2xl border border-gray-700/50 flex flex-col items-center"
+                initial={{ scale: 0.9, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.9, y: 20, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                onClick={e => e.stopPropagation()}
+              >
+                <p className="text-gray-300 text-center mb-8 text-lg">
+                  We recommend playing on a larger screen 😄
+                </p>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => { setShowMobileRecommendModal(false); startNewGame(); }}
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+                  >
+                    Continue anyway
+                  </button>
+                  <button
+                    onClick={() => setShowMobileRecommendModal(false)}
                     className="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-700 hover:to-gray-800 text-white px-8 py-3 rounded-xl font-semibold cursor-pointer transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
                   >
                     Cancel
@@ -450,14 +473,13 @@ export default function CodeNames() {
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-pink-600/20 to-purple-600/20 rounded-full blur-3xl"></div>
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
               </div>
-              <div className="mb-4 bg-gray-900/90 backdrop-blur-xl p-4 shadow-xl border border-gray-700/50 relative z-10">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">
+              <div className="mb-4 bg-gray-900/90 backdrop-blur-xl p-4 shadow-xl border border-gray-700/50 relative z-10 flex-shrink-0">
+                <div className="relative flex items-center justify-between w-full">
+                  <h2 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse flex-shrink-0">
                     CodeNames
                   </h2>
-                  
-                  {/* Game Progress - Centered */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-6">
+                  {/* Game Progress - Desktop only, centered in header */}
+                  <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-6">
                     <div className="flex items-center gap-3 bg-gradient-to-r from-green-900/50 to-green-800/50 px-4 py-2 rounded-full border border-green-700/50 shadow-sm">
                       <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-sm"></div>
                       <span className="font-semibold text-green-200">Green: {stats.greenRevealed}/9</span>
@@ -471,8 +493,7 @@ export default function CodeNames() {
                       <span className="font-semibold text-gray-300">Neutral: {stats.neutralRevealed}/7</span>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 md:gap-3 flex-shrink-0">
                     <button
                       onClick={confirmAndStartNewGame}
                       title="Start New Game"
@@ -503,7 +524,7 @@ export default function CodeNames() {
                 </div>
               </div>
               
-              <div className="flex-1 flex items-center justify-center overflow-hidden relative z-10">
+              <div className="flex-1 min-h-0 flex items-center justify-center overflow-y-auto md:overflow-hidden relative z-10">
                 <GameGrid
                   words={gameWords}
                   revealed={revealed}
@@ -511,6 +532,24 @@ export default function CodeNames() {
                   onReveal={handleReveal}
                   codemasterMode={codemasterMode}
                 />
+              </div>
+
+              {/* Mobile score bar - bottom of screen on phones only */}
+              <div className="flex md:hidden flex-shrink-0 justify-center bg-gray-900/90 backdrop-blur-xl p-3 border-t border-gray-700/50 relative z-10 w-full">
+                <div className="flex justify-center items-center gap-3 flex-wrap">
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-green-900/50 to-green-800/50 px-3 py-1.5 rounded-full border border-green-700/50">
+                    <div className="w-2 h-2 bg-gradient-to-r from-green-500 to-green-600 rounded-full"></div>
+                    <span className="text-sm font-semibold text-green-200">Green: {stats.greenRevealed}/9</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-blue-900/50 to-blue-800/50 px-3 py-1.5 rounded-full border border-blue-700/50">
+                    <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full"></div>
+                    <span className="text-sm font-semibold text-blue-200">Blue: {stats.blueRevealed}/8</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-3 py-1.5 rounded-full border border-gray-600/50">
+                    <div className="w-2 h-2 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full"></div>
+                    <span className="text-sm font-semibold text-gray-300">Neutral: {stats.neutralRevealed}/7</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
