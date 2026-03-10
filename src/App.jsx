@@ -434,15 +434,15 @@ export default function CodeNames() {
                   </h2>
                   {/* Game Progress - Desktop only, centered in header */}
                   <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-6">
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-green-900/50 to-green-800/50 px-4 py-2 rounded-full border border-green-700/50 shadow-sm">
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-green-900/50 to-green-800/50 px-2 py-2 rounded-full border border-green-700/50 shadow-sm">
                       <div className="w-3 h-3 bg-gradient-to-r from-green-500 to-green-600 rounded-full shadow-sm"></div>
                       <span className="font-semibold text-green-200">Green: {stats.greenRevealed}/9</span>
                     </div>
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-blue-900/50 to-blue-800/50 px-4 py-2 rounded-full border border-blue-700/50 shadow-sm">
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-blue-900/50 to-blue-800/50 px-2 py-2 rounded-full border border-blue-700/50 shadow-sm">
                       <div className="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full shadow-sm"></div>
                       <span className="font-semibold text-blue-200">Blue: {stats.blueRevealed}/8</span>
                     </div>
-                    <div className="flex items-center gap-3 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-4 py-2 rounded-full border border-gray-600/50 shadow-sm">
+                    <div className="flex items-center gap-2 bg-gradient-to-r from-gray-800/50 to-gray-700/50 px-2 py-2 rounded-full border border-gray-600/50 shadow-sm">
                       <div className="w-3 h-3 bg-gradient-to-r from-gray-400 to-gray-500 rounded-full shadow-sm"></div>
                       <span className="font-semibold text-gray-300">Neutral: {stats.neutralRevealed}/7</span>
                     </div>

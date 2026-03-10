@@ -81,7 +81,7 @@ export function GameGrid({ words, revealed, roles, onReveal, codemasterMode }) {
               handleCardClick(idx);
             }}
             style={getCardStyle(cardRole, isRevealed, idx)}
-            className={`min-h-14 md:min-h-20 text-xs md:text-base font-medium md:font-bold tracking-tight md:tracking-normal ${!isRevealed && !codemasterMode ? 'bg-[#fef3c7] hover:bg-[#fde68a]' : ''}`}
+            className={`min-h-[10vh] md:min-h-[14vh] text-xs md:text-base font-medium md:font-bold tracking-tight md:tracking-normal ${!isRevealed && !codemasterMode ? 'bg-[#fef3c7] hover:bg-[#fde68a]' : ''}`}
           >
             <span className="text-center" style={{ lineHeight: '1.2' }}>
               {word}
